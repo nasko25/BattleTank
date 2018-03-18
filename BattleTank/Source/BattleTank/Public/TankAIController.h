@@ -14,11 +14,11 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-public:
+private: // even though they are private by default (if you don't write anything)
 	
 	virtual void BeginPlay() override;
 	ATank* GetControlledTank() const;
-	
+	ATank* GetPlayerTank() const;
 	
 	
 };
