@@ -27,4 +27,7 @@ private:
 	// start the tank moving the barrow so that a shot would
 	// hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
+	
+	// Return an OUT parameter, true if hit landscape
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 };
