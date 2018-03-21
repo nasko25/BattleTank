@@ -24,6 +24,11 @@ public:
 	ATank* GetControlledTank() const;
 	
 private:
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5f;
+	
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.33333f;
 	// start the tank moving the barrow so that a shot would
 	// hit where the crosshair intersects the world
 	void AimTowardsCrosshair();
