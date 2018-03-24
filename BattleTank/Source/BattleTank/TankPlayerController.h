@@ -9,6 +9,8 @@
 #include "Public/UObject/Class.h"
 #include "GameFramework/Actor.h"
 #include "Public/Tank.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
 /**
@@ -34,7 +36,13 @@ private:
 	void AimTowardsCrosshair();
 	
 	// Return an OUT parameter, true if hit landscape
-	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	bool GetSightRayHitLocation(FVector& HitLocation) const;
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.f;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
 };
