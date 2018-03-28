@@ -1,13 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankAIController.h"
 #include "Tank.h"
-#include "CoreMinimal.h"
+
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
 #include "Public/UObject/Class.h"
 #include "GameFramework/Actor.h"
 #include "Public/Tank.h"
-#include "TankPlayerController.generated.h" 
+
+#pragma once
 
 
 void ATankAIController::BeginPlay() {
@@ -28,7 +29,24 @@ void ATankAIController::BeginPlay() {
 	}
 }
 
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
 
+	AimTowardsCrosshair();
+}
+
+void ATankAIController::AimTowardsCrosshair() {
+	if (GetPlayerTank()) { 
+		// TODO Move towards the player
+
+		// Aim towards the player
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+		// Fire if ready
+	}
+
+
+}
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());

@@ -37,9 +37,7 @@ void ATankPlayerController::AimTowardsCrosshair() {
 		// UE_LOG(LogTemp, Warning, TEXT("Look direction: %s"), *HitLocation.ToString()); // basically you 
 		//always want something in "", when logging a TEXT.
 
-		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *HitLocation.ToString());
-
-			// TODO Tell controlled tank to aim at this point 
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 // Get world location of linetrace through crosshair, true hits the landscape
