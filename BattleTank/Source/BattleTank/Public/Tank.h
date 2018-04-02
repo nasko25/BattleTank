@@ -34,5 +34,8 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 public: 
 	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = Setup) // makes it a method that you can call from blueprint
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 	
 };
