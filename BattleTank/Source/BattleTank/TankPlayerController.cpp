@@ -1,7 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #pragma once
 
+
 #include "TankPlayerController.h"
+#include "GameFramework/PlayerController.h"
+#include "BattleTank.h"
+
+#include "GameFramework/Actor.h"
+#include "Public/Tank.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/World.h"
+
 
 
 

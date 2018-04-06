@@ -4,13 +4,7 @@
 
 #include "Tank.h"
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
-#include "BattleTank.h"
 #include "Public/UObject/Class.h"
-#include "GameFramework/Actor.h"
-#include "Public/Tank.h"
-#include "GameFramework/PlayerController.h"
-#include "Engine/World.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
 /**
