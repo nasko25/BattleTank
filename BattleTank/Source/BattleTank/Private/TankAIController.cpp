@@ -1,12 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankAIController.h"
 #include "Tank.h"
-
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
-#include "Public/UObject/Class.h"
+//#include "Public/UObject/Class.h"
 #include "GameFramework/Actor.h"
-#include "Public/Tank.h"
+
 
 #pragma once
 

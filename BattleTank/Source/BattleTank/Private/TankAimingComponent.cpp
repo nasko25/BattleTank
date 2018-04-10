@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "CoreMinimal.h"
 
 #include "Kismet/GameplayStatics.h"
 
@@ -35,7 +36,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		StartLocation,
 		HitLocation,
 		LaunchSpeed,
-		ESuggestProjVelocityTraceOption::DoNotTrace);
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace
+		);
 		// Calculate the OutLaunchVelocity
 		if (bHaveAimSolution)
 	{

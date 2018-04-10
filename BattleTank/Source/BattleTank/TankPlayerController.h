@@ -2,14 +2,13 @@
 
 #pragma once
 
-#include "Tank.h"
-#include "CoreMinimal.h"
+
 #include "Public/UObject/Class.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
-/**
- * 
- */
+
+class ATank;
+
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
