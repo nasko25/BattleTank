@@ -41,4 +41,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup) // makes it a method that you can call from blueprint
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Setup) // makes it a method that you can call from blueprint
+	void SetTurretReference(UTankTurret* TurretToSet);
 };

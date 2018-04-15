@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "BattleTank.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "CoreMinimal.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -65,10 +66,16 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString())
 
-		Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number
+		Barrel->Elevate(DeltaRotator.Pitch); 
 
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet) {
+	if (!BarrelToSet) { return; } // protects the pointers for null pointer excption
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
+	if (!TurretToSet) { return; } // protects the pointers for null pointer excption
+	Turret = TurretToSet;
 }
