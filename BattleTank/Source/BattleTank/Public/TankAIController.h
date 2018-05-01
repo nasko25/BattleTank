@@ -18,8 +18,5 @@ private: // even though they are private by default (if you don't write anything
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrosshair();
-	ATank* GetControlledTank() const;
-	ATank* GetPlayerTank() const;
-	
 	
 };
