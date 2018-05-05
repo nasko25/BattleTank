@@ -7,7 +7,7 @@
 #include "Tank.generated.h" // Put new includes above
 
 class UTankAimingComponent;
-
+class UTankMovementComponent;
 class UTankBarrel;
 class AProjectile;
 UCLASS()
@@ -27,6 +27,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:	
 
