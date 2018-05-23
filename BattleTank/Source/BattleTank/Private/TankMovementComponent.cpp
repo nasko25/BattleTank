@@ -10,14 +10,14 @@ void UTankMovementComponent::Initilise(UTankTrack* LeftTrackToSet, UTankTrack* R
 
 void UTankMovementComponent::IntendMoveForward(float Throw) {
 	// UE_LOG(LogTemp, Warning, TEXT("Intend move forward: %f"), Throw)
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 	// TODO prevent double-speed due to dual control use
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw) {
-	if (!LeftTrack || !RightTrack) { return; }
+	if (!ensure(LeftTrack && RightTrack)) { return; }
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
