@@ -30,7 +30,6 @@ void ATankPlayerController::BeginPlay() {
 	if (ensure(AimingComponent)) {
 		FoundAimingComponent(AimingComponent);
 	}
-	else { UE_LOG(LogTemp, Warning, TEXT("PlayerController can't find aiming component at Begin Play.")); }
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
