@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 #include "TankAIController.h"
-#include "Tank.h"
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
+#include "TankAimingComponent.h"
 //#include "Public/UObject/Class.h"
 #include "GameFramework/Actor.h"
 
@@ -36,17 +36,17 @@ void ATankAIController::Tick(float DeltaTime) {
 }
 
 void ATankAIController::AimTowardsCrosshair() {
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto ControlledTank = Cast<ATank>(GetPawn());
-	if (ensure(PlayerTank)) {
-		// Move towards the player
-		MoveToActor(PlayerTank, AcceptanceRadius);
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	auto ControlledTank = GetPawn();
+	if (!ensure(PlayerTank && ControlledTank)) { return; }
+	// Move towards the player
+	MoveToActor(PlayerTank, AcceptanceRadius);
 
-		// Aim towards the player
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+	// Aim towards the player
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-		ControlledTank->Fire(); // TODO limit fire rate
-	}
-
+	// TODO fix firing
+	// ControlledTank->Fire(); // TODO limit fire rate
 
 }
