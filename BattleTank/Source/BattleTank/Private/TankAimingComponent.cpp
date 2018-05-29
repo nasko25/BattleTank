@@ -5,7 +5,7 @@
 #include "TankBarrel.h"
 #include "TankTurret.h"
 #include "CoreMinimal.h"
-
+#include "Projectile.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -75,3 +75,20 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
 		Turret->Rotate(DeltaRotator.Yaw);
 }
 
+void UTankAimingComponent::Fire() {
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	/*auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f:Tank fires"), Time)*/
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds; // more precise time than GetWorld()->GetTimeSeconds();
+	if (isReloaded) {
+		// Spawn a projectile in the socket location on the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+}

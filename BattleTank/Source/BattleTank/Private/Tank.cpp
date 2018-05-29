@@ -1,8 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "Projectile.h"
-#include "TankBarrel.h"
 #include "CoreMinimal.h"
 
 
@@ -13,24 +11,6 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void ATank::BeginPlay() {
+/*void ATank::BeginPlay() {
 	Super::BeginPlay(); // Needed for BP Begin Play to run!!!
-}
-
-void ATank::Fire() {
-	if (!ensure(Barrel)) { return; }
-	/*auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f:Tank fires"), Time)*/
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds; // more precise time than GetWorld()->GetTimeSeconds();
-	if (isReloaded) {
-		// Spawn a projectile in the socket location on the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-	}
-}
+}*/

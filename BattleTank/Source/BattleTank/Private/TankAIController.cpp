@@ -46,7 +46,6 @@ void ATankAIController::AimTowardsCrosshair() {
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-	// TODO fix firing
-	// ControlledTank->Fire(); // TODO limit fire rate
+	AimingComponent->Fire(); // TODO limit fire rate
 
 }
