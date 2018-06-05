@@ -46,6 +46,8 @@ void ATankAIController::AimTowardsCrosshair() {
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
+	// if aiming or locked 
+	if (AimingComponent->GetFiringState() == EFiringState::Locked)
 	AimingComponent->Fire(); // TODO limit fire rate
 
 }
