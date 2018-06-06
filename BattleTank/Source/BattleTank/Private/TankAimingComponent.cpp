@@ -23,7 +23,11 @@ void UTankAimingComponent::BeginPlay() {
 	LastFireTime = FPlatformTime::Seconds();
 }
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-		if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
+		
+		if (RoundsLeft <= 0) {
+			FiringState = EFiringState::OutOfAmmo;
+		}
+		else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
 			FiringState = EFiringState::Reloading;
 		}
 		else if (IsBarrelMoving()) {
@@ -105,7 +109,7 @@ void UTankAimingComponent::Fire() {
 	
 	/*auto Time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f:Tank fires"), Time)*/
-	if (FiringState != EFiringState::Reloading) {
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming) {
 		// Spawn a projectile in the socket location on the barrel
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBlueprint)) { return; }
@@ -116,9 +120,15 @@ void UTankAimingComponent::Fire() {
 			);
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
 	}
 }
 
 EFiringState UTankAimingComponent::GetFiringState() const {
 	return FiringState;
+}
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
