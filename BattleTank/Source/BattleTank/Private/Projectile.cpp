@@ -38,10 +38,18 @@ void AProjectile::BeginPlay()
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
-	// TODO remove the projectile from the world (if it is not done later in the course)
 	ExplosionForce->FireImpulse();
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::OnTimerExpire, DestroyDelay, false);
 }
 
+void AProjectile::OnTimerExpire() {
+	Destroy();
+}
 
 void AProjectile::LaunchProjectile(float Speed) {
   /* auto Time = GetWorld()->GetTimeSeconds();
