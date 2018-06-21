@@ -18,7 +18,10 @@ private: // even though they are private by default (if you don't write anything
 	virtual void Tick(float DeltaTime) override;
 	void AimTowardsCrosshair();
 
+	virtual void SetPawn(APawn* InPawn) override; // called when the pawn is possesed
 
+	UFUNCTION()
+	void OnPossessedTankDeath();
 protected: 
 	// How close can the AI tank get to the player
 	UPROPERTY(EditAnywhere, Category = "Setup") // Consider EditDefaultsOnly

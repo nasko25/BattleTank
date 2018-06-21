@@ -2,6 +2,7 @@
 #include "TankAIController.h"
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
+#include "Tank.h" // So we can implement OnDeath
 #include "TankAimingComponent.h"
 //#include "Public/UObject/Class.h"
 #include "GameFramework/Actor.h"
@@ -28,6 +29,22 @@ void ATankAIController::BeginPlay() {
 	}
 	*/
 	}
+
+void ATankAIController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
+	}
+}
+
+void ATankAIController::OnPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("TANK IS DEADDDDDDDDDD"))
+}
 
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
