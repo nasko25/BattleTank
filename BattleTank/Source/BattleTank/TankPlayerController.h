@@ -3,6 +3,7 @@
 #pragma once
 
 
+#include "CoreMinimal.h"
 #include "Public/UObject/Class.h"
 #include "TankPlayerController.generated.h" // Must be the last include
 
@@ -18,13 +19,17 @@ UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-public:
+private:
 	virtual void BeginPlay() override;
+	virtual void SetPawn(APawn* InPawn) override;
 	virtual void Tick(float DeltaTime) override;
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UFUNCTION()
+	void OnPossessedTankDeath();
 	
 private:
 	UPROPERTY(EditAnywhere)

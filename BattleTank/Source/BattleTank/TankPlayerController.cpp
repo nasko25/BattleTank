@@ -5,6 +5,7 @@
 #include "TankPlayerController.h"
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
+#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -22,6 +23,23 @@ void ATankPlayerController::BeginPlay() {
 	if (ensure(AimingComponent)) {
 		FoundAimingComponent(AimingComponent);
 	}
+}
+
+void ATankPlayerController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+	}
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("TANK DIED"))
+	StartSpectatingOnly();
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {

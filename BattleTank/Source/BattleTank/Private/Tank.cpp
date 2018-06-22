@@ -11,9 +11,10 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-/*void ATank::BeginPlay() {
+void ATank::BeginPlay() {
 	Super::BeginPlay(); // Needed for BP Begin Play to run!!!
-}*/
+	CurrentHealth = StartingHealth;
+}
 
 float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) {
 	Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser); // ? is it needed
