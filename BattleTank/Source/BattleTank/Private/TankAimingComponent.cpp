@@ -20,10 +20,11 @@ UTankAimingComponent::UTankAimingComponent()
 }
 void UTankAimingComponent::BeginPlay() {
 	// So that first fire is after initial reload. 
+	Super::BeginPlay();
 	LastFireTime = FPlatformTime::Seconds();
 }
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-		
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 		if (RoundsLeft <= 0) {
 			FiringState = EFiringState::OutOfAmmo;
 		}
@@ -87,13 +88,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation) {
 	// If no solution found do nothing
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) {
-
+void UTankAimingComponent::MoveBarrelTowards(FVector TargetAimDirection) {
 	if (!ensure(Barrel && Turret)) { return; }
 
 	// Work-out difference between current barrel reaction, and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
+	auto AimAsRotator = TargetAimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *AimAsRotator.ToString())
 
