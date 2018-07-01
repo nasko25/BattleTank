@@ -33,3 +33,8 @@ float ATank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEv
 float ATank::GetHealthPercent() const{
 	return (float)CurrentHealth / (float)StartingHealth;
 }
+
+
+/* Actors do not have child actors, this is a misconsception. What happens is the COMPONENTS of the actors have child components, and the 
+effect of this is that it seems as if the actors have child actors, when in fact only scene components in these actors have child components. 
+See heirarchy in Attachment, Actors and Components lecture */

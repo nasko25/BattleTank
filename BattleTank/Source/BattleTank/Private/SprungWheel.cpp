@@ -7,25 +7,36 @@
 // Sets default values
 ASprungWheel::ASprungWheel()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));
+	SetRootComponent(MassWheelConstraint);
+
+	
 	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	SetRootComponent(Mass);
+	// Mass->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	Mass->SetupAttachment(MassWheelConstraint);
 
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	// Wheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform); a better way to do this:
-	Wheel->SetupAttachment(Mass); // <- this works only in the constructor
+	Wheel->SetupAttachment(MassWheelConstraint); // <- this works only in the constructor
 
-	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));
-	// MassWheelConstraint->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	MassWheelConstraint->SetupAttachment(Mass);
+
 }
 
 // Called when the game starts or when spawned
 void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (GetAttachParentActor()) // gets the tank
+	{ 
+		UE_LOG(LogTemp, Warning, TEXT("Not Null"))
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("Null"))
+	}
 }
 
 // Called every frame
