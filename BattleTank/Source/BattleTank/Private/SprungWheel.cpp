@@ -32,7 +32,7 @@ void ASprungWheel::BeginPlay()
 
 	if (GetAttachParentActor()) // gets the tank
 	{ 
-		UE_LOG(LogTemp, Warning, TEXT("Not Null"))
+		UE_LOG(LogTemp, Warning, TEXT("Not Null: %s"), *GetAttachParentActor()->GetName())
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Null"))
