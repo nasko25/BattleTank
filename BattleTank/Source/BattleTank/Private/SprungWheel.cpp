@@ -14,9 +14,9 @@ ASprungWheel::ASprungWheel()
 	SetRootComponent(MassWheelConstraint);
 
 	
-	Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
+	/* Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
 	// Mass->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-	Mass->SetupAttachment(MassWheelConstraint);
+	Mass->SetupAttachment(MassWheelConstraint); */
 
 	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	// Wheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform); a better way to do this:
@@ -30,13 +30,17 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetAttachParentActor()) // gets the tank
-	{ 
-		UE_LOG(LogTemp, Warning, TEXT("Not Null: %s"), *GetAttachParentActor()->GetName())
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Null"))
-	}
+	SetupConstraint();
+
+	
+}
+
+void ASprungWheel::SetupConstraints() {
+	if (!GetAttachParentActor()) return; // gets the tank 
+	UE_LOG(LogTemp, Warning, TEXT("Not Null: %s"), *GetAttachParentActor()->GetName())
+		UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) return;
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
 }
 
 // Called every frame
