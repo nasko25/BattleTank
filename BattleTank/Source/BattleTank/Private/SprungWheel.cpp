@@ -2,6 +2,7 @@
 
 #include "SprungWheel.h"
 #include "Runtime/Engine/Classes/PhysicsEngine/PhysicsConstraintComponent.h"
+#include "Runtime/Engine/Classes/Components/SphereComponent.h"
 
 
 // Sets default values
@@ -18,11 +19,18 @@ ASprungWheel::ASprungWheel()
 	// Mass->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	Mass->SetupAttachment(MassWheelConstraint); */
 
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
+
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle")); // it is USphereComponent and not UStaticMeshComponent, because we want it
+	// to be able to simulate physics
+	Axle->SetupAttachment(MassWheelConstraint);
+
+	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
 	// Wheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform); a better way to do this:
-	Wheel->SetupAttachment(MassWheelConstraint); // <- this works only in the constructor
+	Wheel->SetupAttachment(Axle); // <- this works only in the constructor
 
 
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Axle Wheel Constraint"));
+	AxleWheelConstraint->SetupAttachment(Axle); 
 }
 
 // Called when the game starts or when spawned
@@ -35,12 +43,13 @@ void ASprungWheel::BeginPlay()
 	
 }
 
-void ASprungWheel::SetupConstraints() {
+void ASprungWheel::SetupConstraint() {
 	if (!GetAttachParentActor()) return; // gets the tank 
 	UE_LOG(LogTemp, Warning, TEXT("Not Null: %s"), *GetAttachParentActor()->GetName())
 		UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) return;
-	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
+	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);
 }
 
 // Called every frame
